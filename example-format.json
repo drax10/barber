@@ -1,0 +1,25 @@
+{
+  /* root is set to the root component ID. It is always present in a template */
+  "root": "UUID-AS5132" ,
+  "UUID-AS5132": {
+    "template": "emailBody",
+    "data": { "style": {"background": "#004444"} },
+    //
+    "children": { "col-1": ["UUID-f329fs", "UUID-3qfv34q", "UUID-23gfsdaf"] }
+  },
+  "UUID-f329fs": {
+    "template": "header",
+    "data": {},
+    "children": {}
+  },
+  "UUID-3qfv34q": {
+    "template": "bodyText",
+    "data": { "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit" },
+    "children": {}
+  },
+  "UUID-23gfsdaf": {
+    "template": "footer",
+    "data": { "year": 2019 },
+    "children": {}
+  }
+}
