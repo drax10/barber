@@ -11,28 +11,25 @@ const ComponentPreview = SortableElement(({setselectedComponentId, selectedCompo
       setselectedComponentId(-1);
     }
   }
-  return HbsComponent({
-    template: componentInformation[componentData.templateName].template,
-    data: componentData.data,
-    props: { className: "component", onClick: toggleSelected }
-  });
+  return <HbsComponent
+    template={componentInformation[componentData.templateName].template}
+    data={componentData.data}
+    props={{ className: "component", onClick: toggleSelected }} />
 });
 
 const ProjectPreviewHOC = SortableContainer(({componentOrder, components, setselectedComponentId, selectedComponentId}) => {
-  return HbsComponent({
-    template: componentInformation[ components[components.root].templateName ].template,
-    // template: "<div style=\"padding: 20px; background: #eeeeee;\">{{children 'content'}}</div>",
-    data: components[components.root].data,
-    children: {"content": componentOrder.map((componentId, index) => (
-      <ComponentPreview
-        key={`item-${index}`}
-        index={index}
-        componentId={componentId}
-        componentData={components[componentId]}
-        selectedComponentId={selectedComponentId}
-        setselectedComponentId={setselectedComponentId} />
-    ))}
-  })
+  return <HbsComponent
+            template={componentInformation[ components[components.root].templateName ].template}
+            data={components[components.root].data}
+            children={{"content": componentOrder.map((componentId, index) => (
+              <ComponentPreview
+                key={`item-${index}`}
+                index={index}
+                componentId={componentId}
+                componentData={components[componentId]}
+                selectedComponentId={selectedComponentId}
+                setselectedComponentId={setselectedComponentId} />
+            ))}} />
 });
 
 class ProjectPreview extends Component {

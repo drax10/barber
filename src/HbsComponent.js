@@ -1,34 +1,55 @@
 import Handlebars from 'handlebars';
-import React from 'react';
+import React, {Component} from 'react';
 const Babel = require('@babel/standalone');
-const HTMLtoJSX = require('htmltojsx');
+const HTMLtoJSX = require('./htmltojsx');
 
-// TODO: Add a way to add other attributes to the base node output in JSX
-const HbsComponent = function({ template, data, children, props }){
+// TODO: Only recompile jsx if props.data changes, otherwise use the same one
+class HbsComponent extends Component {
+  stateCache = {};
+  hash(str) {
+    var hash = 0, i, chr;
+    if (str.length === 0) return 0;
+    for (i = 0; i < str.length; i++) {
+      chr   = str.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  };
+  getComponentJSX(){
+    const {template, data, props} = this.props;
 
-  Handlebars.registerHelper( 'children', key => `{{children["${key}"]}}` );
+    Handlebars.registerHelper( 'children', key => `{{{{children?children["${key}"]:null}}}}` );
 
-  template = Handlebars.compile(template)(data);
+    const converter = new HTMLtoJSX({ createClass: false });
+    let componentJSX = converter.convert( Handlebars.compile(template)(data) )
+        // Deal with HTMLtoJSX converting {{var}} to {'{'}{'{'}var{'}'}{'}'}
+        .replace(/{'{'}{'{'}{'{'}{'{'}(.*){'}'}{'}'}{'}'}{'}'}/g, '{$1}')
 
-  const converter = new HTMLtoJSX({ createClass: false });
-  let componentJSX = converter.convert(template)
-      // Deal with HTMLtoJSX converting {{var}} to {'{'}{'{'}var{'}'}{'}'}
-      .replace(/{'{'}{'{'}(.*){'}'}{'}'}/g, '{$1}')
+    if ( props ) {
+      const propsString = Object.keys(props).map( propKey => `${propKey}={props.${propKey}}` ).join(' ');
+      componentJSX = componentJSX.replace(/(\/?)>/, " "+propsString+"$1>");
+    }
 
-  if ( props ) {
-    const propsString = Object.keys(props).map( propKey => `${propKey}={props.${propKey}}` ).join(' ');
-    componentJSX = componentJSX.replace(/(\/?)>/, " "+propsString+"$1>");
+    return Babel.transform( componentJSX, { presets: ['react'] } ).code;
   }
-
-  let componentRenderScript = Babel.transform(
-    componentJSX,
-    { presets: ['react'] }
-  ).code;
-
-  return window.eval.call(
-    window,
-    '(function (React, children, props) {return '+componentRenderScript+'})'
-  )(React, children, props);
+  render() {
+    const { children, props, data } = this.props;
+    const dataHash = this.hash(JSON.stringify(data));
+    var renderScript;
+    if ( this.stateCache[dataHash] ) {
+      console.log("CACHED");
+      renderScript = this.stateCache[dataHash];
+    } else {
+      console.log("RERENDER");
+      renderScript = this.getComponentJSX();
+      this.stateCache[dataHash] = renderScript;
+    }
+    return window.eval.call(
+      window,
+      '(function (React, children, props) {return '+renderScript+'})'
+    )(React, children, props);
+  }
 }
 
 export default HbsComponent;

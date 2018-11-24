@@ -143,9 +143,9 @@ const componentInformation = {
     <div id="builtin_column_1-0" class="hse-column ">
       <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse !important; border-spacing:0 !important; mso-table-lspace:0pt !important; mso-table-rspace:0pt !important; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-family:Arial, sans-serif; font-size:15px; line-height:1; color:#23496d; word-break:break-word"><tbody><tr><td style="border-collapse:collapse; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; font-family:Arial, sans-serif; font-size:14px; line-height:2; color:#23496d; word-break:break-word; padding:0px 0px">
           <div id="hs_cos_wrapper_builtin_module_1_0_0" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-general-type="widget" data-hs-cos-type="module"><div id="hs_cos_wrapper_builtin_module_1_0_0_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style="color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-general-type="widget" data-hs-cos-type="rich_text">
-        {{#if beforeHeading}}<p class="content-text" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;"><span style="font-family: Arial; font-size: 14px; line-height: '18px'; color: #5a5a5a;">{{beforeHeading}}</span></p>{{/if}}
+        {{#if beforeHeading}}<p class="content-text" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;"><span style="font-family: Arial; font-size: 14px; line-height: 18px; color: #5a5a5a;">{{beforeHeading}}</span></p>{{/if}}
         <p style="font-family: Arial; font-size: 20px; font-style: normal; font-variant: normal; font-weight: 700; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;" class="content-text title-text"><span style="color: #3D454D;">{{headingText}}</span></p>
-        {{#if afterHeading}}<p class="content-text" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;"><span style="font-family: Arial; font-size: 14px; line-height: '18px'; color: #5a5a5a;">{{afterHeading}}</span></p>{{/if}}
+        {{#if afterHeading}}<p class="content-text" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;"><span style="font-family: Arial; font-size: 14px; line-height: 18px; color: #5a5a5a;">{{afterHeading}}</span></p>{{/if}}
     </div></div>
     </td></tr></tbody></table>
 
@@ -229,18 +229,8 @@ const componentInformation = {
       {name: "afterHeading", type: "text", label: "After Heading"}
     ]
   },
-  header: {
-    template: `<h2 style="color: {{fontColor}}">{{content}}</h2>`,
-    default: {
-      content: "Hello World",
-    },
-    options: [
-      {name: "content", type: "text", label: "Content"},
-      {name: "fontColor", type: "text", label: "Font Color"}
-    ]
-  },
   paragraph: {
-    template: `<p class="content-text" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;{{style}}"><span style="font-family: Arial; font-size: 14px; line-height: '18px'; color: #5a5a5a;">{{content}}</span></p>`,
+    template: `<p class="content-text" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; margin-left:90px; margin-right:90px;{{style}}"><span style="font-family: Arial; font-size: 14px; line-height: 18px; color: #5a5a5a;">{{content}}</span></p>`,
     default: {
       content: "Hello World",
       // TODO: add a helper that collapses objects to style syntax
@@ -265,7 +255,7 @@ const componentInformation = {
     ]
   },
   fullWidthImage: {
-    template: `<table style="font-family: Arial; margin-bottom: 0px; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; line-height: '20px'; border-collapse: collapse;" width="100%"><tr><td valign="top" style="border-collapse:collapse; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; font-family:Arial, sans-serif; font-size:15px; line-height:1px; color:#23496d; word-break:break-word; padding-top: 35px;"><a href="{{href}}" target="_blank"><img src="{{src}}" width="673px" style="max-width: 100%;"></a></td></tr></table>`,
+    template: `<table style="font-family: Arial; margin-bottom: 0px; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; line-height: 20px; border-collapse: collapse;" width="100%"><tr><td valign="top" style="border-collapse:collapse; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; font-family:Arial, sans-serif; font-size:15px; line-height:1px; color:#23496d; word-break:break-word; padding-top: 35px;"><a href="{{href}}" target="_blank"><img src="{{src}}" width="673px" style="max-width: 100%;"></a></td></tr></table>`,
     default: {
       href: "https://example.com",
       src: "src"
@@ -290,14 +280,31 @@ const componentInformation = {
       {name: "margin.bottom", type: "text", label: "Margin Bottom"}
     ]
   },
-  footer: {
-    template: `<i>{{content}}</i>`,
+  video: {
+    template: `<center id="hs_cos_wrapper_builtin_module_2_0_0" style="padding: 0 30px;{{style}}"><a href="{{href}}" target="_blank"><img width="420px" src="{{src}}" style="max-width: 100%; margin: 0 auto;"></a> </center>`,
     default: {
-      content: "Hello World"
+      href: "https://example.com",
+      style: "",
+      src: "src"
     },
     options: [
-      {name: "content", type: "text", label: "Content"}
+      {name: "href", type: "text", label: "Link URL"},
+      {name: "style", type: "text", label: "Style"},
+      {name: "src", type: "text", label: "Image URL"}
     ]
+  },
+  footer: {
+    template: `<table style="padding: 0 40px; width: 100%" width="100%"><tr><td style="text-align: center;">
+    <p style="margin-bottom: 1em; text-align:center ; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly" >
+    <img src="https://cdn2.hubspot.net/hubfs/4523037/Trial%20to%20Premium%20Email%20Assets/footer_icon.png?noresize" width="32px" height="32px">
+    </p>
+    <p style="font-family: Arial; font-size: 12px; color:#9CA6B0; line-height: 15px;">Thanks a bunch, the Sling team.</p>
+    <p style="font-family: Arial; font-size: 10px; color:#0085FF; line-height: 1.2em;">\\{{ site_settings.company_name }}, \\{{ site_settings.company_street_address_1 }}, \\{{ site_settings.company_city }}, \\{{ site_settings.company_state }}</p>
+    <p style="font-family: Arial; font-size: 10px; color:#0085FF;">
+    <a data-unsubscribe="true" href="{{ unsubscribe_link}}" style="-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; mso-line-height-rule:exactly; font-family:Arial; font-size:10px; color:#0085FF; font-weight:normal; font-style:normal; text-decoration:none" data-hs-link-id="0" target="_blank">Unsubscribe</a></p>
+    </td></tr></table>`,
+    default: {},
+    options: []
   }
 }
 
